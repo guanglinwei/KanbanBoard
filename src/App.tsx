@@ -5,7 +5,7 @@ import Sidebar from './components/Sidebar';
 
 function App() {
     return (
-        <div className="flex h-screen">
+        <div className="flex h-screen w-full">
             <Sidebar />
             <BoardDisplay />
             <ModalController />

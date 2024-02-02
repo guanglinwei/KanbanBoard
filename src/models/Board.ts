@@ -6,7 +6,7 @@ export interface BoardTask {
 }
 
 export interface BoardColumn {
-    name: String;
+    name: string;
     tasks: BoardTask[];
     color: string;
 }

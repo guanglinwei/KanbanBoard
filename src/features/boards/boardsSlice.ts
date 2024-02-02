@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import Board from "../../models/Board";
 
-const initialState: Board[] = [
+export const initialState: Board[] = [
     {
         name: 'New Board',
         columns: [
@@ -22,10 +22,17 @@ const boardsSlice = createSlice({
         boardUpdated(state, action) {
             const { index, newBoard } = action.payload;
             state[index] = newBoard;
+        },
+        boardDeleted(state, action) {
+            return state.filter((_, i) => i !== action.payload);
+        },
+        setBoards(state, action) {
+            state = action.payload;
+            return state;
         }
     }
 });
 
-export const { boardAdded, boardUpdated } = boardsSlice.actions;
+export const { boardAdded, boardUpdated, boardDeleted, setBoards } = boardsSlice.actions;
 
 export default boardsSlice.reducer;
