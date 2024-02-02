@@ -4,7 +4,7 @@ import { openModal } from "../features/modal/modalSlice";
 import IconButton from "./IconButton";
 import { currentColumnChanged } from "../features/boards/currentColumnSlice";
 import { currentTaskChanged } from "../features/boards/currentTaskSlice";
-import { useDraggable, useDroppable } from "@dnd-kit/core";
+import { useDraggable } from "@dnd-kit/core";
 
 interface TaskDisplayInterface {
     task: BoardTask;

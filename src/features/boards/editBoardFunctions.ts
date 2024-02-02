@@ -1,11 +1,5 @@
-import { useSelector } from "react-redux";
-import { useAppDispatch } from "../../hooks/useRedux";
-import { RootState } from "../../store";
 import { boardUpdated } from "./boardsSlice";
 import Board, { BoardColumn, BoardTask } from "../../models/Board";
-import { useEffect } from "react";
-import { ThunkDispatch } from "@reduxjs/toolkit";
-
 
 export const updateColumn = (boardIndex: number, board: Board, columnIndex: number, newColumn: Partial<BoardColumn>) => {
     return (boardUpdated({

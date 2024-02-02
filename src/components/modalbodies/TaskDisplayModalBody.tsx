@@ -1,11 +1,10 @@
 import { useSelector } from "react-redux";
-import { BoardTask } from "../../models/Board";
 import CheckboxInput from "../CheckboxInput";
 import { RootState } from "../../store";
 import { useAppDispatch } from "../../hooks/useRedux";
 import { updateColumn, updateTask } from "../../features/boards/editBoardFunctions";
 import IconButton from "../IconButton";
-import { closeModal, openModal } from "../../features/modal/modalSlice";
+import { closeModal } from "../../features/modal/modalSlice";
 import { useState } from "react";
 
 // interface TaskDisplayModalBodyInterface {

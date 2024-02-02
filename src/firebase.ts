@@ -1,8 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, User } from 'firebase/auth';
-import { getAnalytics } from "firebase/analytics";
-import { getFirestore, collection, addDoc, getDocs, where, query, limit, getDoc, Timestamp, orderBy } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, getDocs, query, limit, Timestamp, orderBy } from 'firebase/firestore';
 import Board from "./models/Board";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -21,7 +20,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// const analytics = getAnalytics(app);
 export const db = getFirestore(app);
 
 export const auth = getAuth(app);
@@ -29,9 +28,9 @@ const provider = new GoogleAuthProvider();
 
 export const SignIn = () => {
     signInWithPopup(auth, provider).then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential!.accessToken;
-        const user = result.user;
+        // const credential = GoogleAuthProvider.credentialFromResult(result);
+        // const token = credential!.accessToken;
+        // const user = result.user;
     }).catch((error) => {
         console.log(error);
     });
@@ -39,24 +38,6 @@ export const SignIn = () => {
 
 export const SignOut = () => {
     signOut(auth).then(() => { }).catch((error) => { console.log(error); });
-};
-
-export const testDB = () => {
-    addDoc(collection(db, 'users'), {
-        hello: 'world'
-    }).then((result) => {
-        console.log(result.id);
-    }).catch((error) => {
-        console.error(error);
-    });
-};
-
-export const readDB = () => {
-    getDocs(collection(db, 'users')).then((result) => {
-        result.forEach((doc) => {
-            console.log(`${doc.id} - ${JSON.stringify(doc.data())}`);
-        });
-    });
 };
 
 export const uploadBoardsToDB = (boards: Board[], user: User) => {

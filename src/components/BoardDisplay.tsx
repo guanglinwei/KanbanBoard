@@ -1,12 +1,12 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { useAppDispatch } from "../hooks/useRedux";
-import { boardUpdated, initialState, setBoards } from "../features/boards/boardsSlice";
+import { boardUpdated, setBoards } from "../features/boards/boardsSlice";
 import IconButton from "./IconButton";
 import { openModal } from "../features/modal/modalSlice";
 import { DndContext, DragEndEvent, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
 import ColumnDisplay from "./ColumnDisplay";
-import { SignIn, SignOut, getBoardsFromDB, readDB, testDB, uploadBoardsToDB } from '../firebase';
+import { SignIn, SignOut, getBoardsFromDB, uploadBoardsToDB } from '../firebase';
 import { auth } from '../firebase';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { useEffect, useState } from "react";
@@ -29,7 +29,7 @@ function BoardDisplay() {
     }));
 
     useEffect(() => {
-        const _ = onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, (user) => {
             setAuthUser(user);
         });
     }, []);
@@ -42,14 +42,10 @@ function BoardDisplay() {
         }, 5000);
     }, [boardsDirty]);
 
-    useEffect(() => {
-        if (!authUser) return;
-        getFirebaseData();
-    }, [authUser]);
-
     const dispatch = useAppDispatch();
 
     const onAddTask = (columnIndex: number) => {
+        console.log('add', columnIndex)
         dispatch(boardUpdated({
             index: boardIndex,
             newBoard: {
@@ -121,6 +117,8 @@ function BoardDisplay() {
     const getFirebaseData = () => {
         if (!authUser) return;
 
+        // console.log('getting data')
+
         getBoardsFromDB(authUser, (boards) => {
             dispatch(setBoards(boards));
             setBoardsDirty(false);
@@ -145,6 +143,12 @@ function BoardDisplay() {
             setBoardsDirty(false);
         });
     };
+
+    useEffect(() => {
+        if (!authUser) return;
+        getFirebaseData();
+        // eslint-disable-next-line
+    }, [authUser]);
 
     return (board ?
         <DndContext onDragEnd={onDropTask} sensors={sensors}>

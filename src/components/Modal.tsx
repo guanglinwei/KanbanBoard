@@ -2,16 +2,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeModal, openModal } from "../features/modal/modalSlice";
 import { RootState } from "../store";
 import TaskEditModalBody from "./modalbodies/TaskEditModalBody";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import TaskDisplayModalBody from "./modalbodies/TaskDisplayModalBody";
 import IconButton from "./IconButton";
 import { BoardTask } from "../models/Board";
 import BoardEditModalBody from "./modalbodies/BoardEditModalBody";
-import ConfirmationModalBody from "./modalbodies/ConfirmationModalBody";
 
 export interface ModalProps {
     title: string;
-    type: 'TaskEditModalBody' | 'TaskDisplayModalBody' | 'BoardEditModalBody' | 'ConfirmationModalBody' | '' | undefined;
+    type: 'TaskEditModalBody' | 'TaskDisplayModalBody' | 'BoardEditModalBody' | '' | undefined;
     visible?: boolean;
     props?: any;
 }
@@ -23,10 +22,10 @@ function Modal() {
 
     const [nextMouseUpWillCloseModal, setNextMouseUpWillCloseModal] = useState(false);
 
-    const onCloseModal = () => {
+    const onCloseModal = useCallback(() => {
         setNextMouseUpWillCloseModal(false);
         dispatch(closeModal());
-    };
+    }, [dispatch]);
 
     const onSwitchModal = (title: string, type: string, task: BoardTask) => {
         dispatch(closeModal());
@@ -47,9 +46,6 @@ function Modal() {
         case 'BoardEditModalBody':
             bodyElement = <BoardEditModalBody {...props} />;
             break;
-        case 'ConfirmationModalBody':
-            bodyElement = <ConfirmationModalBody {...props} />;
-            break;
         default: bodyElement = <></>;
     };
 
@@ -62,7 +58,7 @@ function Modal() {
         window.addEventListener('keydown', close);
 
         return () => window.removeEventListener('keydown', close);
-    }, []);
+    }, [onCloseModal]);
 
     return (<>
         {visible ? (

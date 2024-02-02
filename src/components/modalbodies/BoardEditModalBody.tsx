@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { boardDeleted, boardUpdated, setBoards } from "../../features/boards/boardsSlice";
+import { boardDeleted, boardUpdated } from "../../features/boards/boardsSlice";
 import { useAppDispatch } from "../../hooks/useRedux";
 import TextInput from "../TextInput";
 import { RootState } from "../../store";
