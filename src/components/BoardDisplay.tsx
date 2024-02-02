@@ -10,6 +10,7 @@ import { SignIn, SignOut, getBoardsFromDB, uploadBoardsToDB } from '../firebase'
 import { auth } from '../firebase';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { useEffect, useState } from "react";
+import { currentBoardChanged } from "../features/boards/currentBoardSlice";
 
 function BoardDisplay() {
     const [authUser, setAuthUser] = useState<User | null>(null);
@@ -119,6 +120,7 @@ function BoardDisplay() {
         // console.log('getting data')
 
         getBoardsFromDB(authUser, (boards) => {
+            dispatch(currentBoardChanged(0));
             dispatch(setBoards(boards));
             setBoardsDirty(false);
         }, () => {
