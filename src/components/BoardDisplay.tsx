@@ -45,7 +45,6 @@ function BoardDisplay() {
     const dispatch = useAppDispatch();
 
     const onAddTask = (columnIndex: number) => {
-        console.log('add', columnIndex)
         dispatch(boardUpdated({
             index: boardIndex,
             newBoard: {
